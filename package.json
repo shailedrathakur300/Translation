@@ -12,6 +12,7 @@
     "@tabler/icons-react": "^3.16.0",
     "mini-svg-data-uri": "^1.4.4",
     "next": "14.2.11",
+    "openai": "^4.61.0",
     "preline": "^2.4.1",
     "react": "^18",
     "react-dom": "^18",
