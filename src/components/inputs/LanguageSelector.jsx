@@ -1,7 +1,11 @@
 import React from "react";
 import { IconLanguage } from "@tabler/icons-react";
 
-const LanguageSelector = ({ selectedLanguage, setSelectedLanguage }) => (
+const LanguageSelector = ({
+  selectedLanguage,
+  setSelectedLanguage,
+  languages,
+}) => (
   <span className="cursor-pointer roundel-full space-x-1 pl-2 bg-black flex items-center flex-row ">
     <IconLanguage size={20} />
     <select

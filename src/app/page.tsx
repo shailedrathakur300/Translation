@@ -7,6 +7,7 @@ import FileUpload from "../components/inputs/FileUpload";
 import { rtfToText } from "../utils/rtfToText";
 import LinkPaste from "../components/inputs/LinkPaste";
 import useTranslate from "../hooks/useTranslate";
+import LanguageSelector from "../components/inputs/LanguageSelector";
 import SpeechRecognitionComponent from "../components/SpeechRecognition/SpeechRecognition";
 import { IconFileUpload, IconVolume } from "@tabler/icons-react";
 
@@ -14,7 +15,7 @@ export default function Home() {
   const [sourceText, setSourceText] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
   const [favourite, setFavourite] = useState<boolean>(false);
-  const [language] = useState<string[]>([
+  const [languages] = useState<string[]>([
     "English",
     "French",
     "Spanish",
@@ -98,6 +99,19 @@ export default function Home() {
                     onChange={() => {}}
                     placeholder={"Target Language"}
                   />
+                  <div className="flex flex-row justify-between w-full">
+                    <span className="cursor-pointer flex space-x-2 flex-row iteam-center">
+                      <LanguageSelector
+                        selectedLanguage={selectedLanguage}
+                        setSelectedLanguage={setSelectedLanguage}
+                        languages={languages}
+                      />
+                      <IconVolume
+                        size={22}
+                        onClick={() => handleAudioPlayback(targetText)}
+                      />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
