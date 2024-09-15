@@ -3,15 +3,52 @@ import "regenerator-runtime/runtime";
 import Image from "next/image";
 import React, { ChangeEvent, useState } from "react";
 import TextArea from "../components/inputs/TextArea";
+import FileUpload from "../components/inputs/FileUpload";
+import { rtfToText } from "../utils/rtfToText";
+import LinkPaste from "../components/inputs/LinkPaste";
+import useTranslate from "../hooks/useTranslate";
 import SpeechRecognitionComponent from "../components/SpeechRecognition/SpeechRecognition";
 import { IconFileUpload, IconVolume } from "@tabler/icons-react";
 
 export default function Home() {
   const [sourceText, setSourceText] = useState<string>("");
+  const [copied, setCopied] = useState<boolean>(false);
+  const [favourite, setFavourite] = useState<boolean>(false);
+  const [language] = useState<string[]>([
+    "English",
+    "French",
+    "Spanish",
+    "German",
+    "Hindi",
+    "Arabic",
+    "Portuguese",
+    "Chinese",
+    "Japanese",
+    "Korean",
+    "Russian",
+  ]);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>("hindi");
+  const targetText = useTranslate(sourceText, selectedLanguage);
+
   const handleAudioPlayback = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
     window.speechSynthesis.speak(utterance);
   };
+
+  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const rtfContent = reader.result as string;
+        const text = rtfToText(rtfContent);
+        setSourceText(text);
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  const handleLinkPaste = (text: string) => {};
 
   return (
     <div className="h-[50rem] w-full dark:bg-black bg-white  dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center">
@@ -45,8 +82,22 @@ export default function Home() {
                         size={22}
                         onClick={() => handleAudioPlayback(sourceText)}
                       />
+                      {/* file upload component */}
+                      <FileUpload handleFileUpload={handleFileUpload} />
+                      <LinkPaste handleLinkPaste={handleLinkPaste} />
+                    </span>
+                    <span className="text-sm pr-4">
+                      {sourceText.length} / 2000
                     </span>
                   </div>
+                </div>
+                <div className="relative z-10 flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-900 border-neutral-700 shadow-gray-900/20">
+                  <TextArea
+                    id={"target-language"}
+                    value={targetText}
+                    onChange={() => {}}
+                    placeholder={"Target Language"}
+                  />
                 </div>
               </div>
             </div>

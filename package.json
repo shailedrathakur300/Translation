@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tabler/icons-react": "^3.16.0",
+    "dotenv": "^16.4.5",
     "mini-svg-data-uri": "^1.4.4",
     "next": "14.2.11",
     "openai": "^4.61.0",
